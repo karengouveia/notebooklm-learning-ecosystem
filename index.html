@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="entardecer">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Grande Faculdade do Conhecimento · NotebookLM da Karen</title>
+<meta name="description" content="Ecossistema Digital de Estudos da Karen: mais de 100 pastas no NotebookLM, 10 mil fontes e 5 mil materiais de aprendizagem, apresentados como uma faculdade.">
+<meta name="theme-color" content="#1a1430">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#0d2219; --forest-2:#12301f; --moss:#1e4a33; --leaf:#9cc97a;
+  --amber:#f3b844; --amber-2:#ffd88a; --amber-deep:#b9821c;
+  --paper:#f6f1e4; --paper-2:#ece4d0; --ink:#13271d; --ink-soft:#4a5c51;
+  --cream:#f4efe2; --muted:#b5c2b6; --line:rgba(244,239,226,.13);
+  --glass:rgba(16,40,28,.55); --soft-bg:#e3efd6; --soft-fg:#2e5a1f;
+  --display:"Bricolage Grotesque",system-ui,sans-serif; --serif:"Instrument Serif",Georgia,serif;
+  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ease:cubic-bezier(.7,0,.2,1); --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--cream);background:var(--forest);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.locked{overflow:hidden}
+a{color:inherit}
+button{font:inherit;cursor:pointer;color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--amber-2);outline-offset:3px;border-radius:8px}
+.wrap{width:min(1180px,92vw);margin:0 auto}
+.kicker{font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.035em;margin:0}
+h2{font-size:clamp(32px,4.4vw,56px);line-height:1}
+h1 em,h2 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em;color:var(--amber-2)}
+.lead{color:var(--muted);font-size:16px;line-height:1.7;max-width:540px}
+
+/* ---------- floresta desfocada (fundo fixo) ---------- */
+.forest{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(180deg,var(--bg1,#10291d) 0%,var(--forest) 45%,var(--bg3,#0b1d15) 100%)}
+.forest i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.75;animation:sway 18s ease-in-out infinite alternate}
+.forest i:nth-child(1){width:46vw;height:52vw;left:-14vw;top:-10vw;background:var(--f1,#2f6a3f)}
+.forest i:nth-child(2){width:38vw;height:44vw;right:-12vw;top:-6vw;background:var(--f2,#3d7a3a);animation-delay:-5s}
+.forest i:nth-child(3){width:30vw;height:30vw;left:22vw;top:20vh;background:var(--f3,#1f4d33);animation-delay:-9s}
+.forest i:nth-child(4){width:34vw;height:40vw;right:4vw;top:48vh;background:var(--f4,#2c5e3a);animation-delay:-3s}
+.forest i:nth-child(5){width:40vw;height:36vw;left:-8vw;bottom:-14vw;background:var(--f5,#24553a);animation-delay:-12s}
+.forest i:nth-child(6){width:22vw;height:22vw;left:58vw;top:6vh;background:var(--f6,#6f8f3a);opacity:.35;animation-delay:-7s}
+.forest i:nth-child(7){width:18vw;height:18vw;left:8vw;top:52vh;background:var(--f7,#8a9b45);opacity:.28;animation-delay:-2s}
+@keyframes sway{from{transform:translate(0,0) scale(1)}to{transform:translate(3vw,2vh) scale(1.08)}}
+.forest b{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,216,138,.55),rgba(255,216,138,0) 70%);animation:float 14s ease-in-out infinite alternate}
+@keyframes float{from{transform:translateY(0);opacity:.25}to{transform:translateY(-40px);opacity:.7}}
+.forest::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 30%,transparent 30%,rgba(6,16,11,.55) 100%)}
+
+
+/* ---------- temas (troque em <html data-theme="...">) ---------- */
+[data-theme="entardecer"]{--forest:#1a1430;--ink:#211a35;--ink-soft:#57506b;--bg1:#241a3e;--bg3:#120e22;--forest-2:#2a1f4a;--moss:#3b2d66;--leaf:#ff9a5a;--glass:rgba(32,24,58,.55);--glass-2:rgba(42,31,74,.8);--muted:#bdb6d2;--line:rgba(240,234,255,.13);--soft-bg:#ece6fb;--soft-fg:#43327a;
+  --f1:#4a2f78;--f2:#7a3f5e;--f3:#2e2a63;--f4:#a8553a;--f5:#3a2a6e;--f6:#d07a3a;--f7:#6a3f8a}
+[data-theme="cafe"]{--forest:#1c1411;--bg1:#271b15;--bg3:#140e0b;--forest-2:#2e1f18;--moss:#5a3524;--leaf:#e8794a;--glass:rgba(40,27,21,.55);--glass-2:rgba(52,35,26,.8);--muted:#cdbcaf;--line:rgba(255,240,228,.13);--soft-bg:#f6e3d6;--soft-fg:#7a3a1c;
+  --f1:#5a3020;--f2:#7a4426;--f3:#3a2a1e;--f4:#8a4a2a;--f5:#4a3424;--f6:#b0662e;--f7:#6e5a34}
+[data-theme="noite"]{--forest:#141515;--bg1:#1b1d1c;--bg3:#0d0e0e;--forest-2:#1f2221;--moss:#3a403c;--leaf:#c6ef6a;--glass:rgba(34,37,35,.55);--glass-2:rgba(44,48,45,.8);--muted:#b9beb9;--line:rgba(240,244,238,.13);--soft-bg:#eef8d8;--soft-fg:#3f5a12;
+  --f1:#3a3d3b;--f2:#4a4a40;--f3:#2a2d2c;--f4:#3e4a3a;--f5:#33302c;--f6:#6a7a3a;--f7:#5a5446}
+
+/* ---------- topo ---------- */
+.top{position:fixed;inset:0 0 auto;z-index:40;display:flex;align-items:center;gap:24px;padding:16px 4vw;transition:background .4s,backdrop-filter .4s}
+.top.solid{background:var(--glass);backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:-.02em}
+.brand-cap{width:32px;height:32px;border-radius:10px;background:var(--amber);display:grid;place-items:center;color:var(--forest);transform:rotate(-6deg)}
+.top nav{margin-left:auto;display:flex;gap:6px}
+.top nav a{text-decoration:none;font-size:13px;font-weight:700;color:#d3dccf;padding:9px 14px;border-radius:99px;transition:background .2s,color .2s}
+.top nav a:hover{background:rgba(255,255,255,.08);color:#fff}
+@media(max-width:640px){.top nav a:not(.nav-cta){display:none}}
+.nav-cta{background:rgba(243,184,68,.14);color:var(--amber-2)!important;border:1px solid rgba(243,184,68,.4)}
+
+/* ---------- campus (hero) ---------- */
+.campus{position:relative;padding:100px 0 30px}
+.campus-head{text-align:center;margin-bottom:26px}
+.campus-head h1{font-size:clamp(34px,5vw,68px);line-height:1;margin:16px auto 14px;max-width:16ch}
+.campus-head p{margin:0 auto;color:var(--muted);max-width:520px;line-height:1.65}
+.reveal-up{opacity:0;transform:translateY(24px);animation:up 1s var(--ease-out) forwards}
+.d1{animation-delay:.1s}.d2{animation-delay:.25s}.d3{animation-delay:.4s}
+@keyframes up{to{opacity:1;transform:none}}
+.stage{width:min(1320px,96vw);margin:0 auto;position:relative;border-radius:30px;overflow:hidden;aspect-ratio:1672/941;
+  box-shadow:0 50px 120px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.1),0 0 120px rgba(243,184,68,.12);
+  opacity:0;transform:scale(.97) translateY(20px);animation:stageIn 1.4s var(--ease-out) .5s forwards}
+@keyframes stageIn{to{opacity:1;transform:none}}
+.scene{position:absolute;inset:0;transform-origin:50% 50%;transition:transform 1.05s var(--ease),filter 1.05s var(--ease);will-change:transform}
+.scene img{width:100%;height:100%;object-fit:cover;animation:breathe 22s ease-in-out infinite alternate}
+@keyframes breathe{from{transform:scale(1.03)}to{transform:scale(1)}}
+.scene.zoom{filter:brightness(1.25) saturate(1.1)}
+.scene.zoom .tag,.scene.zoom .pin{opacity:0!important;transition:opacity .15s}
+#fireflies{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;mix-blend-mode:screen}
+.lamp{position:absolute;width:9%;aspect-ratio:1;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(255,214,140,.55),rgba(255,200,110,0) 65%);transform:translate(-50%,-50%);animation:flicker 3.2s infinite}
+@keyframes flicker{0%,100%{opacity:.85}42%{opacity:1}45%{opacity:.6}48%{opacity:.95}70%{opacity:.8}}
+.door{position:absolute;top:69%;height:25.5%;z-index:3;border:0;background:transparent;padding:0;border-radius:10px}
+.door .glow{position:absolute;inset:0;border-radius:10px;background:radial-gradient(70% 80% at 50% 70%,rgba(255,206,120,.55),rgba(255,206,120,0) 70%);opacity:0;transition:opacity .35s}
+.door .frame{position:absolute;inset:0;border-radius:10px;border:2px solid rgba(255,216,138,0);transition:border-color .35s,box-shadow .35s}
+.door .pin{position:absolute;left:50%;top:58%;width:16px;height:16px;margin:-8px;border-radius:50%;background:var(--amber-2);animation:ping 2.2s infinite}
+.door:nth-of-type(2) .pin{animation-delay:.4s}.door:nth-of-type(3) .pin{animation-delay:.8s}.door:nth-of-type(4) .pin{animation-delay:1.2s}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,216,138,.75)}80%,100%{box-shadow:0 0 0 22px rgba(255,216,138,0)}}
+.door .tag{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translate(-50%,8px);opacity:0;white-space:nowrap;background:var(--amber);color:var(--forest);font-size:12px;font-weight:800;padding:8px 13px;border-radius:99px;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:.3s var(--ease-out)}
+.door:hover .glow,.door:focus-visible .glow{opacity:1}
+.door:hover .frame,.door:focus-visible .frame{border-color:rgba(255,216,138,.9);box-shadow:0 0 40px rgba(255,216,138,.35) inset}
+.door:hover .tag,.door:focus-visible .tag{opacity:1;transform:translate(-50%,0)}
+.door:hover .pin{opacity:0}
+@media(max-width:700px){.door .tag{display:none}.door .pin{width:12px;height:12px;margin:-6px}}
+
+.hall{width:min(1320px,96vw);margin:20px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.hall-btn{position:relative;text-align:left;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(18px) saturate(1.3);
+  border-radius:18px;padding:16px 18px;display:flex;align-items:center;gap:14px;overflow:hidden;transition:transform .3s var(--ease-out),border-color .3s,background .3s}
+.hall-btn:hover{transform:translateY(-3px);border-color:rgba(243,184,68,.6);background:var(--glass-2,rgba(20,50,34,.75))}
+.hall-num{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:rgba(243,184,68,.15);color:var(--amber-2);font-family:var(--display);font-weight:800;font-size:15px;transition:background .3s,color .3s,transform .3s}
+.hall-btn:hover .hall-num{background:var(--amber);color:var(--forest);transform:rotate(-6deg)}
+.hall-btn strong{display:block;font-size:14px;line-height:1.25}
+.hall-btn small{color:var(--muted);font-size:12px}
+.hall-btn .arrow{margin-left:auto;color:var(--amber-2);transition:transform .3s}
+.hall-btn:hover .arrow{transform:translateX(4px)}
+.hint{text-align:center;color:var(--muted);font-size:13px;margin:18px 0 0}
+.hint span{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber-2);margin-right:8px;animation:ping 2.2s infinite}
+@media(max-width:900px){.hall{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.hall{grid-template-columns:1fr;gap:8px}.hall-btn{padding:12px 14px}}
+
+/* ---------- números ---------- */
+.numbers{padding:80px 0 30px}
+.num-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.num{padding:30px 28px;border-radius:24px;background:var(--glass);backdrop-filter:blur(18px);border:1px solid var(--line)}
+.num strong{display:block;font-family:var(--display);font-weight:800;font-size:clamp(44px,5.6vw,76px);line-height:1;letter-spacing:-.05em;color:#fff}
+.num strong sup{font-size:.45em;color:var(--amber);vertical-align:top;margin-left:2px}
+.num > span{display:block;margin-top:12px;font-weight:700}
+.num small{color:var(--muted)}
+@media(max-width:760px){.num-grid{grid-template-columns:1fr}}
+
+/* ---------- como funciona ---------- */
+.how{padding:80px 0}
+.how-top{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap;margin-bottom:46px}
+.flow{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.flow svg.track{position:absolute;left:0;right:0;top:38px;width:100%;height:4px;overflow:visible;z-index:0}
+.track line{stroke:rgba(243,184,68,.4);stroke-width:2;stroke-dasharray:6 8;animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-14}}
+.traveler{position:absolute;top:33px;left:0;width:14px;height:14px;border-radius:50%;background:var(--amber-2);box-shadow:0 0 18px var(--amber);z-index:1;animation:travel 6s var(--ease) infinite}
+@keyframes travel{0%{left:4%;opacity:0}8%{opacity:1}92%{opacity:1}100%{left:92%;opacity:0}}
+.step{position:relative;z-index:2}
+.step-ico{width:80px;height:80px;border-radius:26px;background:var(--glass);backdrop-filter:blur(14px);border:1px solid rgba(243,184,68,.4);display:grid;place-items:center;color:var(--amber-2);margin-bottom:20px}
+.step-ico svg{width:34px;height:34px}
+.step b{font-size:12px;color:var(--amber);letter-spacing:.18em}
+.step h3{font-size:22px;margin:6px 0 8px}
+.step p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+@media(max-width:860px){.flow{grid-template-columns:1fr 1fr;row-gap:36px}.flow svg.track,.traveler{display:none}}
+.marquee{margin-top:56px;overflow:hidden;padding:6px 0;mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.marquee-in{display:flex;gap:12px;width:max-content;animation:slide 38s linear infinite}
+.marquee:hover .marquee-in{animation-play-state:paused}
+@keyframes slide{to{transform:translateX(-50%)}}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:99px;background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--line);font-size:13px;font-weight:600;white-space:nowrap;color:#e3e9df}
+.chip i{width:7px;height:7px;border-radius:50%;background:var(--leaf)}
+
+/* ---------- acervo ---------- */
+.real{padding:60px 0 90px}
+.real-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center}
+.browser{border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 30px 80px rgba(0,0,0,.5);border:0;padding:0;width:100%;text-align:left;transform:perspective(1400px) rotateY(-8deg) rotateX(3deg);transition:transform .8s var(--ease-out)}
+.browser:hover{transform:none}
+.bar{display:flex;align-items:center;gap:7px;background:#ebeee6;padding:10px 14px}
+.bar i{width:10px;height:10px;border-radius:50%;background:#d0d6c9}
+.bar span{margin-left:10px;font-size:11px;color:#5d6a5f;background:#fff;border-radius:99px;padding:4px 14px}
+.browser .shot{height:340px;overflow:hidden}
+.browser .shot img{animation:pan 26s ease-in-out infinite alternate}
+@keyframes pan{from{transform:translateY(0)}to{transform:translateY(calc(-100% + 340px))}}
+.zoom-note{display:inline-block;margin-top:12px;font-size:12px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-size:14px;padding:14px 22px;border-radius:99px;transition:transform .25s,background .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn-amber{background:var(--amber);color:var(--forest)}
+.btn-amber:hover{background:var(--amber-2)}
+.btn-ghost{border:1px solid rgba(244,239,226,.3)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+@media(max-width:900px){.real-grid{grid-template-columns:1fr}.browser{transform:none}}
+
+/* ---------- canais ---------- */
+.channels{padding:70px 0 100px}
+.ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:44px}
+.ch{position:relative;min-height:260px;border-radius:26px;padding:28px;text-decoration:none;display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);backdrop-filter:blur(18px);transition:transform .4s var(--ease-out),border-color .4s}
+.ch:hover{transform:translateY(-6px)}
+.ch h3{font-size:26px;margin-top:auto}
+.ch p{margin:8px 0 0;color:rgba(244,239,226,.75);font-size:14px;line-height:1.55}
+.ch .go{position:absolute;top:24px;right:24px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.12);transition:transform .4s var(--ease-out),background .3s}
+.ch:hover .go{transform:rotate(-45deg);background:#fff;color:#111}
+.ch-yt{background:radial-gradient(120% 90% at 0% 0%,rgba(255,61,61,.35),transparent 60%),rgba(30,20,18,.55)}
+.ch-yt:hover{border-color:#ff6b6b}
+.ch-sp{background:radial-gradient(120% 90% at 0% 0%,rgba(30,215,96,.32),transparent 60%),rgba(10,30,20,.55)}
+.ch-sp:hover{border-color:#1ed760}
+.ch-lib{background:radial-gradient(120% 90% at 0% 0%,rgba(243,184,68,.3),transparent 60%),rgba(20,30,18,.55)}
+.ch-lib:hover{border-color:var(--amber)}
+.play{width:62px;height:62px;border-radius:18px;background:#ff3d3d;display:grid;place-items:center;animation:yt 2.4s infinite}
+@keyframes yt{0%{box-shadow:0 0 0 0 #ff3d3d77}70%,100%{box-shadow:0 0 0 18px #ff3d3d00}}
+.eq{display:flex;align-items:flex-end;gap:5px;height:62px}
+.eq i{width:9px;border-radius:4px;background:#1ed760;animation:eq 1s ease-in-out infinite alternate}
+.eq i:nth-child(1){animation-delay:-.2s}.eq i:nth-child(2){animation-delay:-.5s}.eq i:nth-child(3){animation-delay:-.1s}.eq i:nth-child(4){animation-delay:-.7s}.eq i:nth-child(5){animation-delay:-.35s}
+@keyframes eq{from{height:12%}to{height:100%}}
+.books{display:flex;gap:6px;align-items:flex-end;height:62px}
+.books i{width:14px;border-radius:3px 3px 1px 1px;background:var(--leaf);transform-origin:bottom;transition:transform .4s var(--ease-out)}
+.books i:nth-child(1){height:70%}.books i:nth-child(2){height:95%;background:var(--amber-2)}.books i:nth-child(3){height:80%;background:#e9e2cf}.books i:nth-child(4){height:60%}
+.ch-lib:hover .books i:nth-child(odd){transform:rotate(-8deg)}
+@media(max-width:900px){.ch-grid{grid-template-columns:1fr}}
+footer{padding:0 0 40px;color:var(--muted);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:24px}
+
+/* ---------- SALA ---------- */
+.room{position:fixed;inset:0;z-index:60;background:var(--paper);color:var(--ink);overflow-y:auto;overscroll-behavior:contain;
+  clip-path:circle(0% at var(--cx,50%) var(--cy,50%));visibility:hidden;transition:clip-path .9s var(--ease),visibility 0s .9s}
+.room.open{clip-path:circle(150% at var(--cx,50%) var(--cy,50%));visibility:visible;transition:clip-path .9s var(--ease),visibility 0s}
+.room::before{content:"";position:fixed;inset:0;pointer-events:none;background:
+  radial-gradient(45% 35% at 0% 0%,rgba(150,120,230,.28),transparent 70%),
+  radial-gradient(40% 40% at 100% 0%,rgba(243,184,68,.22),transparent 70%)}
+.room-bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:14px;padding:14px 4vw;background:rgba(246,241,228,.82);backdrop-filter:blur(14px);border-bottom:1px solid rgba(19,39,29,.08)}
+.back{white-space:nowrap;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(19,39,29,.18);background:#fff;border-radius:99px;padding:10px 16px;font-weight:800;font-size:13px;color:var(--ink);transition:background .2s,color .2s}
+.back:hover{background:var(--ink);color:var(--amber-2)}
+.room-dots{margin-left:auto;display:flex;gap:6px}
+.room-dots button{border:1px solid rgba(19,39,29,.2);background:transparent;border-radius:99px;padding:8px 13px;font-size:12px;font-weight:800;color:var(--ink-soft)}
+.room-dots button[aria-current="true"]{background:var(--ink);color:var(--amber-2);border-color:var(--ink)}
+@media(max-width:600px){.room-dots button span{display:none}.back .full{display:none}}
+.room-in{position:relative;width:min(1180px,92vw);margin:0 auto;padding:42px 0 90px}
+.room-in > *{opacity:0;transform:translateY(22px)}
+.room.open .room-in > *{animation:up .9s var(--ease-out) forwards}
+.room.open .room-in > *:nth-child(2){animation-delay:.12s}
+.room.open .room-in > *:nth-child(3){animation-delay:.24s}
+.room.open .room-in > *:nth-child(4){animation-delay:.36s}
+.room.open .room-in > *:nth-child(5){animation-delay:.48s}
+.room-tags{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.plaque{display:inline-flex;align-items:center;background:var(--forest-2);color:var(--amber-2);border:2px solid var(--amber);border-radius:8px;padding:8px 16px;font-size:12px;font-weight:800;letter-spacing:.2em;box-shadow:0 0 0 4px var(--forest-2)}
+.badge{display:inline-flex;align-items:center;gap:8px;margin-left:8px;background:var(--soft-bg);color:var(--soft-fg);border-radius:99px;padding:8px 14px;font-size:13px;font-weight:800}
+.badge::before{content:"★";color:var(--amber-deep)}
+.room-title{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:end;margin:26px 0 44px}
+.room-title h2{font-size:clamp(36px,5vw,66px);line-height:.98;color:var(--ink)}
+.room-title h2 em{color:var(--amber-deep)}
+.room-title p{margin:0;font-size:17px;line-height:1.65;color:var(--ink-soft)}
+.room-title p strong{color:var(--ink)}
+@media(max-width:860px){.room-title{grid-template-columns:1fr;gap:16px}}
+.recipe-label{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.recipe-label h3{font-size:24px}
+.recipe-label span{flex:1;height:1px;background:rgba(19,39,29,.15)}
+.recipe{display:grid;grid-template-columns:1fr 1.4fr 1fr;background:#fff;border-radius:28px;box-shadow:0 30px 70px rgba(19,39,29,.12);overflow:hidden;border:1px solid rgba(19,39,29,.08)}
+.col{padding:28px 26px;position:relative}
+.col+.col{border-left:1px dashed rgba(19,39,29,.18)}
+.col+.col::before{content:"";position:absolute;left:-15px;top:50px;width:28px;height:28px;border-radius:50%;z-index:2;background-color:var(--amber);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2313271d' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");background-size:16px;background-repeat:no-repeat;background-position:center;box-shadow:0 0 0 5px #fff}
+.col-tag{font-size:11px;font-weight:800;letter-spacing:.2em;color:var(--amber-deep)}
+.col h4{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:-.02em;margin:6px 0 16px}
+.col-mid{background:linear-gradient(180deg,#fbf8f0,#f3eedf)}
+.big{font-family:var(--display);font-size:66px;line-height:1;font-weight:800;letter-spacing:-.05em}
+.big small{font-family:var(--sans);font-size:15px;font-weight:700;letter-spacing:0;color:var(--ink-soft);margin-left:6px}
+.dots{display:grid;grid-template-columns:repeat(auto-fill,minmax(9px,1fr));gap:4px;margin:18px 0}
+.dots i{aspect-ratio:1;border-radius:3px;background:var(--moss);opacity:0;transform:scale(.2)}
+.dots.go i{animation:pop .4s var(--ease-out) forwards}
+@keyframes pop{to{opacity:1;transform:none}}
+.dots i:nth-child(7n){background:var(--amber)}
+.dots i:nth-child(11n){background:var(--leaf)}
+.col p.desc{margin:0;font-size:14px;line-height:1.6;color:var(--ink-soft)}
+.legend{font-size:12px;color:#7b887f;margin-top:8px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.steps li{display:grid;grid-template-columns:38px 1fr;gap:12px;background:#fff;border-radius:16px;padding:14px;border:1px solid rgba(19,39,29,.08);transition:transform .3s var(--ease-out),box-shadow .3s}
+.steps li:hover{transform:translateX(4px);box-shadow:0 10px 24px rgba(19,39,29,.08)}
+.steps .n{width:38px;height:38px;border-radius:12px;background:var(--forest-2);color:var(--amber-2);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:16px}
+.steps strong{display:block;font-size:15px;margin-bottom:3px}
+.steps p{margin:0;font-size:13.5px;line-height:1.55;color:var(--ink-soft)}
+.tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.tools span{font-size:11px;font-weight:800;padding:4px 9px;border-radius:99px;background:var(--soft-bg);color:var(--soft-fg)}
+.outs{display:grid;gap:10px}
+.out{display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:var(--paper);border:1px solid rgba(19,39,29,.06)}
+.out .oi{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--forest-2);color:var(--amber-2)}
+.out .oi svg{width:20px;height:20px}
+.out strong{display:block;font-size:14px}
+.out small{color:#6f7d73;font-size:12px}
+@media(max-width:960px){.recipe{grid-template-columns:1fr}.col+.col{border-left:0;border-top:1px dashed rgba(19,39,29,.18)}.col+.col::before{left:26px;top:-15px;transform:rotate(90deg)}}
+.inside{margin-top:50px}
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.gallery figure{margin:0}
+.frame-img{border:0;padding:0;background:#fff;width:100%;border-radius:18px;overflow:hidden;box-shadow:0 20px 50px rgba(19,39,29,.16);display:block;aspect-ratio:2/1;cursor:zoom-in}
+.frame-img img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .8s var(--ease-out)}
+.frame-img:hover img{transform:scale(1.04)}
+.gallery figcaption{font-size:13px;color:#6f7d73;margin-top:10px;line-height:1.5}
+.gallery figcaption b{color:var(--ink)}
+@media(max-width:760px){.gallery{grid-template-columns:1fr}}
+.room-links{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn-ink{background:var(--forest-2);color:var(--amber-2)}
+.btn-ink:hover{background:var(--ink)}
+.btn-line{border:1px solid rgba(19,39,29,.25);color:var(--ink)}
+.note{margin-top:22px;padding:16px 18px;border-radius:16px;background:#fff8e6;border:1px solid #f1dfae;color:#5f4a17;font-size:14px;line-height:1.55}
+.next-room{margin-top:56px;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:28px 30px;border-radius:24px;background:var(--forest-2);color:#fff;border:0;width:100%;text-align:left;transition:transform .3s var(--ease-out)}
+.next-room:hover{transform:translateY(-3px)}
+.next-room small{display:block;color:var(--amber);font-weight:800;letter-spacing:.2em;font-size:11px}
+.next-room strong{font-family:var(--display);font-size:26px;font-weight:800;letter-spacing:-.03em}
+.next-room .arrow{width:52px;height:52px;border-radius:50%;background:var(--amber);color:var(--ink);display:grid;place-items:center;transition:transform .3s}
+.next-room:hover .arrow{transform:translateX(6px)}
+
+.lightbox{position:fixed;inset:0;z-index:80;background:rgba(5,14,9,.92);display:none;place-items:center;padding:4vw;cursor:zoom-out}
+.lightbox.open{display:grid;animation:fade .3s}
+.lightbox img{max-height:90vh;width:auto;border-radius:12px;box-shadow:0 30px 80px #000}
+@keyframes fade{from{opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .reveal-up,.stage,.room-in > *{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+<div class="forest" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<header class="top" id="top">
+  <a class="brand" href="#inicio"><span class="brand-cap"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 8.5 12 14l9-4.5V16h2V8.5L12 3Zm-6 9.6V16c0 1.7 2.7 3.5 6 3.5s6-1.8 6-3.5v-3.4L12 15.6 6 12.6Z"/></svg></span>NotebookLM da Karen</a>
+  <nav aria-label="Navegação principal">
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#acervo">Acervo real</a>
+    <a class="nav-cta" href="#canais">Canais ↗</a>
+  </nav>
+</header>
+
+<main>
+  <section class="campus" id="inicio">
+    <div class="campus-head wrap">
+      <div class="kicker reveal-up d1">Ecossistema Digital de Estudos</div>
+      <h1 class="reveal-up d2">Cada sala desta faculdade é <em>uma pasta de estudos.</em></h1>
+      <p class="reveal-up d3">Escolha uma porta para entrar e descobrir como os materiais lá dentro foram criados.</p>
+    </div>
+    <div class="stage" id="stage">
+      <div class="scene" id="scene">
+        <img src="assets/faculdade.jpg" alt="Fachada da Grande Faculdade do Conhecimento, com quatro salas no térreo: Contabilidade Geral, Provas e Avaliações, ENEM 2025 e Segurança da Informação." width="1672" height="941" fetchpriority="high">
+        <span class="lamp" style="left:6.6%;top:49%"></span>
+        <span class="lamp" style="left:93.3%;top:49%;animation-delay:-1.3s"></span>
+        <span class="lamp" style="left:50%;top:31%;width:6%;animation-delay:-.6s"></span>
+        <div id="doors"></div>
+      </div>
+      <canvas id="fireflies" aria-hidden="true"></canvas>
+    </div>
+    <div class="hall" id="hall" aria-label="Salas da faculdade"></div>
+    <p class="hint"><span></span>As portas da fachada são clicáveis. Os atalhos acima levam às mesmas salas.</p>
+  </section>
+
+  <section class="numbers wrap" aria-label="O ecossistema em números">
+    <div class="num-grid">
+      <div class="num"><strong><span data-count="100">100</span><sup>+</sup></strong><span>salas de estudo</span><small>pastas temáticas no NotebookLM</small></div>
+      <div class="num"><strong><span data-count="10000">10.000</span><sup>+</sup></strong><span>fontes organizadas</span><small>livros, leis, artigos, provas e aulas</small></div>
+      <div class="num"><strong><span data-count="5000">5.000</span><sup>+</sup></strong><span>materiais produzidos</span><small>áudios, vídeos, slides, resumos e mapas</small></div>
+    </div>
+  </section>
+
+  <section class="how wrap" id="como-funciona">
+    <div class="how-top">
+      <div>
+        <div class="kicker">O que acontece dentro de toda sala</div>
+        <h2 style="margin-top:12px">Uma ideia simples.<br><em>Muitos jeitos de aprender.</em></h2>
+      </div>
+      <p class="lead">Toda pasta segue o mesmo caminho: o conteúdo entra, é organizado e explicado, e sai transformado em materiais de estudo. O que muda de uma sala para outra é o ponto de partida.</p>
+    </div>
+    <div class="flow">
+      <svg class="track" preserveAspectRatio="none"><line x1="4%" y1="2" x2="96%" y2="2"/></svg>
+      <span class="traveler"></span>
+      <div class="step"><div class="step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div><b>01</b><h3>Fontes</h3><p>Provas, questões, PDFs de aulas, vídeos ou só uma grade curricular.</p></div>
+      <div class="step"><div class="step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><b>02</b><h3>Pasta</h3><p>Tudo reunido por assunto num notebook do NotebookLM.</p></div>
+      <div class="step"><div class="step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.9 5.8L20 10l-5 3.6L16.8 20 12 16.4 7.2 20 9 13.6 4 10l6.1-1.2z"/></svg></div><b>03</b><h3>Explicação</h3><p>Cada parte é resolvida e explicada com IA, e a explicação vira uma nova fonte.</p></div>
+      <div class="step"><div class="step-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="m10 8.5 4 2-4 2z" fill="currentColor"/><path d="M8 21h8"/></svg></div><b>04</b><h3>Materiais</h3><p>O Estúdio transforma as explicações em aulas, slides e muito mais.</p></div>
+    </div>
+    <div class="marquee" aria-label="Formatos gerados no Estúdio do NotebookLM"><div class="marquee-in" id="marquee"></div></div>
+  </section>
+
+  <section class="real wrap" id="acervo">
+    <div class="real-grid">
+      <div>
+        <div class="kicker">Visão real do ambiente</div>
+        <h2 style="margin-top:12px">Por trás da fachada, <em>um acervo de verdade.</em></h2>
+        <p class="lead" style="margin-top:18px">A faculdade é só a metáfora. Este é um recorte real da biblioteca no NotebookLM, onde cada cartão é uma pasta.</p>
+        <div class="actions">
+          <a class="btn btn-amber" href="https://www.youtube.com/watch?v=GD6BT78KXRk" target="_blank" rel="noopener">▶&nbsp; Assistir ao tour em vídeo</a>
+        </div>
+      </div>
+      <div>
+        <button class="browser" type="button" data-zoom="assets/acervo.jpg" aria-label="Ampliar captura real da biblioteca de notebooks">
+          <div class="bar"><i></i><i></i><i></i><span>notebooklm.google.com</span></div>
+          <div class="shot"><img src="assets/acervo.jpg" alt="Captura real da biblioteca do NotebookLM com dezenas de notebooks organizados por disciplina" loading="lazy"></div>
+        </button>
+        <span class="zoom-note">Clique na imagem para ampliar</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="channels" id="canais">
+    <div class="wrap">
+      <div class="kicker">O conhecimento saiu das pastas</div>
+      <h2 style="margin-top:12px">E ganhou o mundo, <em>um pouquinho de cada vez.</em></h2>
+      <div class="ch-grid">
+        <a class="ch ch-yt" href="https://www.youtube.com/@karen.cantinhodeestudos" target="_blank" rel="noopener">
+          <span class="play"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="go" aria-hidden="true">→</span>
+          <h3>Cantinho de estudos</h3>
+          <p>Videoaulas e conteúdos visuais no YouTube.</p>
+        </a>
+        <a class="ch ch-sp" href="https://open.spotify.com/show/30GT6VihUAYhL5Nad5kxNV" target="_blank" rel="noopener">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="go" aria-hidden="true">→</span>
+          <h3>Aulas para ouvir</h3>
+          <p>A correção da prova SEFAZ GO 2026 em áudio, no Spotify.</p>
+        </a>
+
+      </div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>NotebookLM da Karen · A Grande Faculdade do Conhecimento</span><span>Projeto autoral de organização e produção de materiais de estudo com IA.</span></div></footer>
+
+<section class="room" id="room" aria-modal="true" role="dialog" aria-labelledby="room-h">
+  <div class="room-bar">
+    <button class="back" id="back" type="button"><span aria-hidden="true">←</span><span><span class="full">Voltar ao </span>campus</span></button>
+    <div class="room-dots" id="room-dots"></div>
+  </div>
+  <div class="room-in" id="room-in"></div>
+</section>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Imagem ampliada"><img id="lightbox-img" alt=""></div>
+
+<script>
+/* =========================================================
+   CONTEÚDO DAS SALAS: edite aqui textos, números e links.
+   area = posição da porta na imagem da fachada (em %).
+   ========================================================= */
+const SALAS = [
+  {
+    id:"contabilidade", nome:"Contabilidade Geral", curto:"Contabilidade", area:{x:12.9,w:15.8},
+    destaque:"A pasta mais completa do acervo",
+    frase:["Uma questão pode virar","uma aula inteira."],
+    resumo:"Cada questão de um treinamento intensivo foi <strong>resolvida e explicada individualmente</strong>, virou uma fonte própria e deu origem à sua própria videoaula e apresentação.",
+    entrada:{n:141, rotulo:"fontes", texto:"Cada fonte traz o enunciado de uma questão e a explicação passo a passo da resolução."},
+    passos:[
+      {t:"Resolver", d:"Uma questão por vez, explicada em detalhe com apoio de diferentes IAs.", tools:["Gemini","ChatGPT","NotebookLM"]},
+      {t:"Virar fonte", d:"Cada questão resolvida se tornou uma fonte, com enunciado e explicação.", tools:["NotebookLM"]},
+      {t:"Produzir em escala", d:"O Estúdio gerou vídeos e apresentações de slides para cada questão.", tools:["Estúdio"]},
+      {t:"Publicar", d:"Parte dos vídeos foi para o YouTube e atraiu público de forma orgânica.", tools:["YouTube"]}
+    ],
+    saida:[
+      {i:"video", t:"Videoaulas", s:"uma para cada questão"},
+      {i:"slides", t:"Apresentações", s:"slides para revisar"},
+      {i:"yt", t:"Playlists no YouTube", s:"aulas organizadas por tema"}
+    ],
+    imagens:[
+      {src:"assets/contabilidade.jpg", t:"A pasta por dentro", d:"Fontes à esquerda, conversa no centro, Estúdio à direita."},
+      {src:"assets/cont-video.jpg", t:"Um material gerado", d:"Videoaula de uma questão, criada no Estúdio."}
+    ],
+    links:[
+      {t:"Abrir a pasta no NotebookLM", u:"https://notebooklm.google.com/notebook/5f69f50c-a4b1-46a7-8d50-b087b4008683", main:true},
+      {t:"Ver uma playlist no YouTube", u:"https://youtube.com/playlist?list=PL6FgNMsHuZs5UnlbDECaG9iVIRCeAY9sZ"}
+    ]
+  },
+  {
+    id:"provas", nome:"Provas e Avaliações", curto:"Provas", area:{x:33.2,w:15},
+    selo:"SEFAZ GO 2026",
+    destaque:"A prova inteira, página por página",
+    frase:["Da prova original a","uma correção completa."],
+    resumo:"A prova é <strong>fatiada em páginas</strong>. Cada página recebe a correção de todas as questões e alternativas, guiada por um prompt e pelo gabarito, e essa correção vira a base das aulas.",
+    entrada:{n:52, rotulo:"fontes", texto:"Páginas da prova, identificadas por prova e número (P1-02, P1-03…), já com as explicações."},
+    passos:[
+      {t:"Fatiar", d:"A prova em PDF é separada em um arquivo para cada página.", tools:["PDF"]},
+      {t:"Identificar", d:"Cada página entra na pasta como fonte, nomeada por prova e página.", tools:["NotebookLM"]},
+      {t:"Corrigir", d:"Uma página por vez: prompt detalhado + gabarito geram a explicação de cada questão.", tools:["Chat do NotebookLM"]},
+      {t:"Produzir", d:"A correção substitui a página original e vira aula em áudio, slides e infográficos.", tools:["Estúdio"]}
+    ],
+    saida:[
+      {i:"audio", t:"Aulas em áudio", s:"uma por página da prova"},
+      {i:"slides", t:"Slides", s:"para ver enquanto ouve a aula"},
+      {i:"spotify", t:"Correção no Spotify", s:"a prova comentada em áudio"}
+    ],
+    imagens:[
+      {src:"assets/go-pasta.jpg", t:"A pasta por dentro", d:"Cada fonte é uma página da prova, já corrigida."},
+      {src:"assets/go-slide.jpg", t:"Um material gerado", d:"Abertura dos slides da aula de Língua Portuguesa."}
+    ],
+    links:[
+      {t:"Abrir a pasta no NotebookLM", u:"https://notebooklm.google.com/notebook/2370836e-5330-4e85-bef7-af604636401a", main:true},
+      {t:"Ouvir a correção no Spotify", u:"https://open.spotify.com/show/30GT6VihUAYhL5Nad5kxNV"}
+    ],
+    nota:"O mesmo método foi usado na SEFAZ MT 2026 (76 fontes) e em outras provas fiscais. As aulas em áudio viraram o principal recurso de revisão depois da teoria."
+  },
+  {
+    id:"enem", nome:"ENEM 2025", curto:"ENEM", area:{x:52.5,w:15.1},
+    destaque:"O mesmo método, para estudantes",
+    frase:["O método não termina","nos concursos."],
+    resumo:"A metodologia das provas foi levada para o <strong>ENEM 2025</strong>, com materiais pensados para um público jovem: linguagem leve, exemplos do dia a dia e foco em entender o que a questão pede.",
+    entrada:{n:105, rotulo:"fontes", texto:"Questões dos dois dias de prova (D1 e D2), com as imagens das questões quando necessário."},
+    passos:[
+      {t:"Separar", d:"O exame foi dividido por dia e por questão, incluindo textos e imagens.", tools:["PDF","NotebookLM"]},
+      {t:"Explicar", d:"Cada questão ganhou uma explicação: o que pede, o tema e a ligação com o cotidiano.", tools:["Chat do NotebookLM"]},
+      {t:"Produzir", d:"As explicações viraram aulas em áudio e slides para cada bloco de questões.", tools:["Estúdio"]}
+    ],
+    saida:[
+      {i:"audio", t:"Aulas em áudio", s:"por bloco de questões"},
+      {i:"slides", t:"Slides", s:"para ver enquanto ouve"}
+    ],
+    imagens:[
+      {src:"assets/enem-pasta.jpg", t:"A pasta por dentro", d:"105 fontes do primeiro e do segundo dia de prova."},
+      {src:"assets/enem-slide.jpg", t:"Um material gerado", d:"Slides da aula sobre as questões de inglês."}
+    ]
+  },
+  {
+    id:"seguranca", nome:"Segurança da Informação", curto:"Segurança", area:{x:71.9,w:15.2},
+    selo:"Pós-graduação",
+    destaque:"Criada do zero, sem material prévio",
+    frase:["Uma pós inteira,","a partir da grade."],
+    resumo:"Aqui não havia apostila nem aula gravada. O ponto de partida foi <strong>só a grade curricular</strong>: cada aula prevista virou uma pesquisa aprofundada e, depois, uma aula leve e fácil de lembrar.",
+    entrada:{n:36, rotulo:"fontes", texto:"Aulas construídas do zero, organizadas por módulo, a partir dos temas da grade curricular."},
+    passos:[
+      {t:"Planejar", d:"A grade do curso definiu as aulas, e cada uma ganhou um prompt de pesquisa.", tools:["Grade curricular","ChatGPT"]},
+      {t:"Pesquisar", d:"Cada prompt rodou no Deep Research e gerou um relatório aprofundado.", tools:["Deep Research"]},
+      {t:"Reescrever", d:"Os relatórios viraram aulas com linguagem leve, humor e recursos de memorização.", tools:["Chat do NotebookLM"]},
+      {t:"Produzir", d:"As aulas se tornaram as fontes oficiais e geraram áudios e slides.", tools:["Estúdio"]}
+    ],
+    saida:[
+      {i:"audio", t:"Aulas em áudio", s:"uma para cada aula da grade"},
+      {i:"slides", t:"Apresentações", s:"para ver enquanto ouve"}
+    ],
+    imagens:[
+      {src:"assets/pos-pasta.jpg", t:"A pasta por dentro", d:"Aulas organizadas por módulo, como no curso."},
+      {src:"assets/pos-slide.jpg", t:"Um material gerado", d:"Slides da aula 01, Fundamentos de Segurança da Informação."}
+    ],
+    nota:"O mesmo processo foi usado para montar uma pasta do MBA em Inteligência Artificial."
+  }
+];
+const FORMATOS = ["Resumo em áudio","Resumo em vídeo","Apresentação de slides","Mapa mental","Relatórios","Cartões didáticos","Teste","Infográfico","Tabela de dados"];
+const ICON = {
+  video:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/></svg>',
+  slides:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></svg>',
+  yt:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+  audio:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 10v4M8 6v12M12 3v18M16 7v10M20 10v4"/></svg>',
+  spotify:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 10c2.8-.9 5.6-.6 8 .8M8.5 13.3c2.2-.6 4.4-.4 6.4.7M9 16.3c1.6-.4 3.2-.2 4.6.5"/></svg>'
+};
+const $ = s => document.querySelector(s);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pad = n => String(n).padStart(2,'0');
+
+/* floresta: pontos de luz */
+(function(){ const f=document.querySelector('.forest'); for(let i=0;i<16;i++){ const b=document.createElement('b'); const s=20+Math.random()*60; b.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${-Math.random()*14}s;animation-duration:${10+Math.random()*10}s`; f.appendChild(b);} })();
+
+$('#doors').innerHTML = SALAS.map(s=>`
+  <button class="door" style="left:${s.area.x}%;width:${s.area.w}%" data-sala="${s.id}" aria-label="Entrar na sala ${s.nome}">
+    <span class="glow"></span><span class="frame"></span><span class="pin"></span>
+    <span class="tag">Entrar em ${s.curto} ↗</span>
+  </button>`).join('');
+$('#hall').innerHTML = SALAS.map((s,i)=>`
+  <button class="hall-btn" data-sala="${s.id}">
+    <span class="hall-num">${pad(i+1)}</span>
+    <span><strong>${s.nome}</strong><small>${s.destaque}</small></span>
+    <span class="arrow">→</span>
+  </button>`).join('');
+$('#marquee').innerHTML = [...FORMATOS,...FORMATOS].map(f=>`<span class="chip"><i></i>${f}</span>`).join('');
+
+const room = $('#room'), scene = $('#scene'), stage = $('#stage');
+let lastTrigger = null, busy = false;
+
+function renderRoom(s){
+  const i = SALAS.indexOf(s), next = SALAS[(i+1)%SALAS.length];
+  $('#room-dots').innerHTML = SALAS.map((r,k)=>`<button data-go="${r.id}" aria-current="${r===s}">${pad(k+1)}<span> · ${r.curto}</span></button>`).join('');
+  $('#room-in').innerHTML = `
+    <div class="room-tags"><span class="plaque">SALA ${pad(i+1)}${s.selo?` · ${s.selo.toUpperCase()}`:''}</span><span class="badge">${s.destaque}</span></div>
+    <div class="room-title">
+      <div><div class="kicker" style="color:var(--amber-deep);margin-bottom:12px">${s.nome}</div>
+      <h2 id="room-h">${s.frase[0]} <em>${s.frase[1]}</em></h2></div>
+      <p>${s.resumo}</p>
+    </div>
+    <div>
+      <div class="recipe-label"><h3>Composição da pasta</h3><span></span></div>
+      <div class="recipe">
+        <div class="col">
+          <div class="col-tag">01 · ENTROU</div><h4>O que tem na pasta</h4>
+          <div class="big">${s.entrada.n}<small>${s.entrada.rotulo}</small></div>
+          <div class="dots" id="dots" aria-hidden="true">${'<i></i>'.repeat(s.entrada.n)}</div>
+          <p class="desc">${s.entrada.texto}</p>
+          <div class="legend">Cada quadradinho é uma fonte.</div>
+        </div>
+        <div class="col col-mid">
+          <div class="col-tag">02 · PROCESSO</div><h4>Como foi feito</h4>
+          <ol class="steps">${s.passos.map((p,k)=>`<li><span class="n">${k+1}</span><div><strong>${p.t}</strong><p>${p.d}</p><div class="tools">${p.tools.map(t=>`<span>${t}</span>`).join('')}</div></div></li>`).join('')}</ol>
+        </div>
+        <div class="col">
+          <div class="col-tag">03 · SAIU</div><h4>O que foi criado</h4>
+          <div class="outs">${s.saida.map(o=>`<div class="out"><span class="oi">${ICON[o.i]}</span><span><strong>${o.t}</strong><small>${o.s}</small></span></div>`).join('')}</div>
+        </div>
+      </div>
+    </div>
+    <div class="inside">
+      <div class="recipe-label"><h3>Veja por dentro</h3><span></span></div>
+      <div class="gallery">${s.imagens.map(m=>`<figure><button class="frame-img" type="button" data-zoom="${m.src}" aria-label="Ampliar: ${m.t}"><img src="${m.src}" alt="${m.t}: ${m.d}" loading="lazy"></button><figcaption><b>${m.t}.</b> ${m.d}</figcaption></figure>`).join('')}</div>
+      ${s.links?`<div class="room-links">${s.links.map(l=>`<a class="btn ${l.main?'btn-ink':'btn-line'}" href="${l.u}" target="_blank" rel="noopener">${l.t} ↗</a>`).join('')}</div>`:''}
+      ${s.nota?`<div class="note">${s.nota}</div>`:''}
+    </div>
+    <button class="next-room" type="button" data-go="${next.id}">
+      <span><small>PRÓXIMA SALA</small><strong>${next.nome}</strong></span><span class="arrow">→</span>
+    </button>`;
+  const dots = $('#dots');
+  [...dots.children].forEach((d,k)=>d.style.animationDelay = (reduce?0:(600 + k*Math.min(14,1400/s.entrada.n)))+'ms');
+  requestAnimationFrame(()=>dots.classList.add('go'));
+  room.scrollTop = 0;
+}
+
+function openRoom(id, trigger, fromHash){
+  const s = SALAS.find(r=>r.id===id); if(!s || busy) return;
+  lastTrigger = trigger || document.activeElement;
+  const cx = s.area.x + s.area.w/2, cy = 81;
+  const r = stage.getBoundingClientRect();
+  const visible = r.top < innerHeight*0.6 && r.bottom > innerHeight*0.4;
+  let px = innerWidth/2, py = innerHeight/2;
+  if (visible){ px = r.left + r.width*cx/100; py = r.top + r.height*cy/100; }
+  else if (trigger && trigger.getBoundingClientRect){ const b=trigger.getBoundingClientRect(); px=b.left+b.width/2; py=b.top+b.height/2; }
+  room.style.setProperty('--cx', px+'px'); room.style.setProperty('--cy', py+'px');
+  renderRoom(s);
+  if (location.hash !== '#sala-'+id) history.replaceState(null,'','#sala-'+id);
+  const show = () => { room.classList.remove('open'); void room.offsetWidth; room.classList.add('open'); document.body.classList.add('locked'); $('#back').focus({preventScroll:true}); busy=false; };
+  if (room.classList.contains('open')) { room.scrollTo({top:0}); return; }
+  if (visible && !reduce && !fromHash){
+    busy = true;
+    scene.style.transformOrigin = `${cx}% ${cy}%`;
+    scene.classList.add('zoom'); scene.style.transform = 'scale(3.6)';
+    setTimeout(show, 650);
+  } else show();
+}
+function closeRoom(){
+  if (!room.classList.contains('open')) return;
+  room.classList.remove('open');
+  document.body.classList.remove('locked');
+  history.replaceState(null,'',location.pathname + location.search);
+  setTimeout(()=>{ scene.style.transform=''; scene.classList.remove('zoom'); }, 450);
+  if (lastTrigger && lastTrigger.focus) lastTrigger.focus({preventScroll:true});
+}
+document.addEventListener('click', e=>{
+  const t = e.target.closest('[data-sala],[data-go],[data-zoom]');
+  if (!t) return;
+  if (t.dataset.zoom){ $('#lightbox-img').src = t.dataset.zoom; $('#lightbox').classList.add('open'); return; }
+  if (t.dataset.go){ const s=SALAS.find(r=>r.id===t.dataset.go); renderRoom(s); history.replaceState(null,'','#sala-'+s.id); room.scrollTo({top:0,behavior:'smooth'}); return; }
+  openRoom(t.dataset.sala, t);
+});
+$('#back').addEventListener('click', closeRoom);
+$('#lightbox').addEventListener('click', ()=>$('#lightbox').classList.remove('open'));
+addEventListener('keydown', e=>{
+  if (e.key!=='Escape') return;
+  if ($('#lightbox').classList.contains('open')) $('#lightbox').classList.remove('open'); else closeRoom();
+});
+function fromHash(){ const m = location.hash.match(/^#sala-([\w-]+)/); if (m) openRoom(m[1], null, true); else if (room.classList.contains('open')) closeRoom(); }
+addEventListener('hashchange', fromHash);
+fromHash();
+
+const topBar = $('#top');
+addEventListener('scroll', ()=>topBar.classList.toggle('solid', scrollY>40), {passive:true});
+
+const fmt = n => n.toLocaleString('pt-BR');
+const io = new IntersectionObserver(entries=>entries.forEach(en=>{
+  if(!en.isIntersecting) return; io.unobserve(en.target);
+  const el=en.target, end=+el.dataset.count, t0=performance.now(), dur=reduce?1:1600;
+  const tick=t=>{ const p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,4); el.textContent=fmt(Math.round(end*e)); if(p<1) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+}),{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>io.observe(el));
+
+(function(){
+  const c = $('#fireflies'), ctx = c.getContext('2d'); if (reduce) return;
+  let W,H, flies=[], on=true;
+  const resize=()=>{ const dpr=Math.min(devicePixelRatio||1,2); W=c.clientWidth; H=c.clientHeight; c.width=W*dpr; c.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); };
+  resize(); addEventListener('resize', resize);
+  for(let i=0;i<46;i++) flies.push({x:Math.random(),y:.25+Math.random()*.75,r:Math.random()*1.8+.6,vx:(Math.random()-.5)*.0004,vy:-Math.random()*.00035-.00005,ph:Math.random()*6.28});
+  new IntersectionObserver(e=>on=e[0].isIntersecting).observe(c);
+  (function loop(t){
+    requestAnimationFrame(loop); if(!on) return;
+    ctx.clearRect(0,0,W,H);
+    for(const f of flies){
+      f.x+=f.vx+Math.sin(t/1800+f.ph)*.00025; f.y+=f.vy;
+      if(f.y<.15){f.y=1.02;f.x=Math.random();}
+      const a=.35+.65*Math.abs(Math.sin(t/900+f.ph));
+      const g=ctx.createRadialGradient(f.x*W,f.y*H,0,f.x*W,f.y*H,f.r*7);
+      g.addColorStop(0,`rgba(255,226,150,${a})`); g.addColorStop(1,'rgba(255,200,110,0)');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(f.x*W,f.y*H,f.r*7,0,6.28); ctx.fill();
+    }
+  })(0);
+})();
+
+if (!reduce && matchMedia('(pointer:fine)').matches){
+  stage.addEventListener('mousemove', e=>{
+    if (scene.classList.contains('zoom')) return;
+    const r=stage.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+    scene.style.transform=`translate(${x*-10}px,${y*-8}px) scale(1.015)`;
+  });
+  stage.addEventListener('mouseleave', ()=>{ if(!scene.classList.contains('zoom')) scene.style.transform=''; });
+}
+</script>
+</body>
+</html>
